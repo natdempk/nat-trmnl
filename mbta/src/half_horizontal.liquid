@@ -1,0 +1,18 @@
+<div class="layout layout--col gap--md">
+  <div class="title">{{ station }} {{ direction }}</div>
+
+  {% if trains.size > 0 %}
+  {% for train in trains limit:2 %}
+  <div class="row row--center-y gap--space-between">
+    <span class="value">{{ train.display }}</span>
+    <span class="label">{{ train.time }}</span>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="description">No trains</div>
+  {% endif %}
+
+  {% if alerts.size > 0 %}
+  <div class="description">⚠ {{ alerts[0].header | truncate: 60 }}</div>
+  {% endif %}
+</div>

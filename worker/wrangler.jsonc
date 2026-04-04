@@ -1,0 +1,7 @@
+{
+  "name": "nat-trmnl",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-01",
+  // Set your MBTA API key: npx wrangler secret put MBTA_API_KEY
+  "vars": {}
+}

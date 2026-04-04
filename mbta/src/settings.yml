@@ -1,0 +1,10 @@
+---
+strategy: polling
+polling_verb: get
+polling_url: 'http://localhost:8787/mbta'
+polling_headers: ''
+name: MBTA Red Line
+refresh_interval: 5
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''

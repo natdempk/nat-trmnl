@@ -1,0 +1,32 @@
+# TRMNLP configuration
+---
+watch:
+  - .trmnlp.yml
+  - src
+
+# Mock data for preview — these are used when no polling_url is set
+custom_fields:
+  station: "Davis"
+  direction: "Inbound"
+  trains:
+    - time: "8:15 AM"
+      minutes: 3
+      display: "3 min"
+    - time: "8:22 AM"
+      minutes: 10
+      display: "10 min"
+    - time: "8:31 AM"
+      minutes: 19
+      display: "19 min"
+    - time: "8:45 AM"
+      minutes: 33
+      display: "33 min"
+  alerts:
+    - header: "Red Line experiencing delays of 10-15 minutes due to signal problems"
+      effect: "DELAY"
+      service_effect: "Red Line delay"
+      time: "3:30 PM"
+  updated_at: "8:12 AM"
+
+variables:
+  trmnl: {}

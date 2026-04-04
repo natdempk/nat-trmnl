@@ -1,0 +1,18 @@
+import { getMbtaData } from "./plugins/mbta";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/mbta") {
+      const data = await getMbtaData(env);
+      return Response.json(data);
+    }
+
+    return Response.json({ error: "not found" }, { status: 404 });
+  },
+} satisfies ExportedHandler<Env>;
+
+interface Env {
+  MBTA_API_KEY?: string;
+}

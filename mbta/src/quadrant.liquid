@@ -1,0 +1,38 @@
+<style>
+  .mbta-q * {
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    letter-spacing: normal !important;
+  }
+</style>
+<div class="layout layout--col layout--left mbta-q" style="height: 100%; justify-content: space-between; padding: 8px 10px; box-sizing: border-box; overflow: hidden;">
+  <!-- Station sign header -->
+  <div style="border: 3px solid black; width: 100%;">
+    <div style="background: black; color: white; padding: 5px 12px; text-align: center;">
+      <span style="font-size: 24px; font-weight: 900; letter-spacing: 3px !important;">DAVIS</span>
+    </div>
+    <div style="padding: 2px 12px; text-align: center;">
+      <span style="font-size: 14px; font-weight: 700;">INBOUND</span>
+    </div>
+  </div>
+
+  <!-- Train times -->
+  {% if trains.size > 0 %}
+  <div style="display: flex; flex-direction: column; gap: 2px; width: 100%; flex: 1; justify-content: center;">
+    {% for train in trains limit:3 %}
+    <div style="display: flex; justify-content: space-between; align-items: baseline;{% if forloop.first %} font-weight: 700;{% endif %}">
+      <span style="font-size: 22px;">{{ train.display }}</span>
+      <span style="font-size: 22px;">{{ train.time }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="font-size: 22px; flex: 1; display: flex; align-items: center;">No upcoming trains</div>
+  {% endif %}
+
+  <!-- Subway status -->
+  <div style="width: 100%; border-top: 2px solid black; padding-top: 5px; display: flex; align-items: center; gap: 6px;">
+    <span style="background: black; color: white; font-size: 14px; font-weight: 800; padding: 3px 10px; border-radius: 14px; line-height: 1;">RL</span>
+    {% if status_ok %}<span style="font-size: 14px;">&#9679;</span>{% else %}<span style="font-size: 14px;">&#9888;</span>{% endif %}
+    <span style="font-size: 16px; font-weight: 600;">{{ subway_status }}</span>
+  </div>
+</div>
