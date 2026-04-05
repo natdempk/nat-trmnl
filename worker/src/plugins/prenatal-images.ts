@@ -1,6 +1,7 @@
 const PRENATAL_IMAGE_BASE = "/prenatal-images";
 const PRENATAL_ASSET_BASE = "/prenatal-assets";
 const DEFAULT_EXTENSION = "png";
+const FALLBACK_FILENAME = "placeholder.png";
 
 export interface PrenatalImageRecord {
   week: number;
@@ -51,5 +52,5 @@ export async function getPrenatalImageResponse(request: Request, env: { ASSETS: 
     return assetResponse;
   }
 
-  return env.ASSETS.fetch(new URL(`${PRENATAL_ASSET_BASE}/placeholder.svg`, url.origin));
+  return env.ASSETS.fetch(new URL(`${PRENATAL_ASSET_BASE}/${FALLBACK_FILENAME}`, url.origin));
 }

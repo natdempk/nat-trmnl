@@ -110,7 +110,11 @@
           <div class="divider"></div>
 
           <div class="copy-text size-line" data-clamp="3">
-            Your baby is the size of a <strong>{{ fruit_name | downcase }}</strong>
+            {% if fruit_name == "Still Forming" %}
+              Your baby is <strong>{{ fruit_name | downcase }}</strong>
+            {% else %}
+              Your baby is the size of <strong>{{ fruit_size_phrase }}</strong>
+            {% endif %}
           </div>
 
           <div class="divider"></div>

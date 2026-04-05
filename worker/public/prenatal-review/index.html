@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Prenatal SVG Review</title>
+    <title>Prenatal PNG Review</title>
     <style>
       :root {
         color-scheme: light;
@@ -43,6 +43,9 @@
         border: 2px solid #111;
         padding: 12px;
       }
+      .card.missing {
+        opacity: 0.65;
+      }
       .art {
         height: 180px;
         display: flex;
@@ -55,6 +58,12 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
+      }
+      .missing-label {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
       .meta {
         margin-top: 10px;
@@ -79,12 +88,21 @@
         word-break: break-word;
         opacity: 0.7;
       }
+      .summary {
+        margin: 0 0 20px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.65;
+      }
     </style>
   </head>
   <body>
     <main class="page">
-      <h1>Prenatal SVG Review</h1>
-      <p>Hand-authored black-and-white week-by-week produce art for the BabyCenter prenatal tracker.</p>
+      <h1>Prenatal PNG Review</h1>
+      <p>Week-by-week produce art for the prenatal tracker. This review page previews the PNG asset set currently used by the worker.</p>
+      <div class="summary" id="summary">Loading weeks 14-40…</div>
       <section class="grid" id="grid"></section>
     </main>
     <script>
@@ -92,12 +110,19 @@
         const response = await fetch("/prenatal/images");
         const data = await response.json();
         const grid = document.getElementById("grid");
+        const summary = document.getElementById("summary");
+        const previewItems = data.images.filter((item) => item.week >= 14);
+        let loadedCount = 0;
 
-        for (const item of data.images) {
+        summary.textContent = `Showing ${previewItems.length} PNG slots for weeks 14-40`;
+
+        for (const item of previewItems) {
           const card = document.createElement("article");
           card.className = "card";
+          const artId = `art-${item.week}`;
+          const previewUrl = `/prenatal-assets/${item.expected_filename}`;
           card.innerHTML = `
-            <div class="art"><img src="${item.image_url}" alt="${item.fruit_name}" loading="lazy"></div>
+            <div class="art" id="${artId}"><img src="${previewUrl}" alt="${item.fruit_name}" loading="lazy"></div>
             <div class="meta">
               <div class="week">Week ${item.week}</div>
               <div class="name">${item.fruit_name}</div>
@@ -105,6 +130,18 @@
             </div>
           `;
           grid.appendChild(card);
+
+          const art = document.getElementById(artId);
+          const image = art.querySelector("img");
+          image.addEventListener("load", () => {
+            loadedCount += 1;
+            summary.textContent = `${loadedCount} of ${previewItems.length} PNGs loaded`;
+          });
+          image.addEventListener("error", () => {
+            card.classList.add("missing");
+            art.innerHTML = '<div class="missing-label">Missing PNG</div>';
+            summary.textContent = `${loadedCount} of ${previewItems.length} PNGs loaded`;
+          });
         }
       }
 

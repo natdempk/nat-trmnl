@@ -70,7 +70,7 @@ These are e-ink dashboard widgets viewed at a glance from 3–5 inches away. Des
 
 - The worker route (for example `/prenatal`) is a JSON API endpoint, not a visual page. To verify the actual widget layout, run `trmnlp serve` for the plugin and inspect `/quadrant`.
 - The prenatal plugin currently expects produce images via the worker asset pipeline, not embedded repo-relative template files. The worker returns `fruit_image_url` and the Liquid template should render that URL.
-- Prenatal image assets currently prefer PNGs. Missing PNGs fall back to the placeholder asset; do not assume the old SVGs are part of the intended final display path.
+- Prenatal image assets are PNG-only. Use `/prenatal-review` to visually inspect the current week-by-week image set.
 - When checking prenatal layout, trust the real `/quadrant` preview page over direct iframe/render URLs.
 
 ## Deployment

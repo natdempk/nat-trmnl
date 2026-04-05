@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
-  <rect width="240" height="240" fill="white"/>
-  <rect x="16" y="16" width="208" height="208" rx="24" ry="24" fill="none" stroke="black" stroke-width="8"/>
-  <circle cx="120" cy="102" r="42" fill="black"/>
-  <rect x="114" y="50" width="12" height="26" fill="black"/>
-  <path d="M126 48c18 0 28 8 34 18-15 4-28 1-40-8z" fill="white" stroke="black" stroke-width="6" stroke-linejoin="round"/>
-  <text x="120" y="176" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="black">ADD IMAGE</text>
-  <text x="120" y="198" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="black">prenatal-assets</text>
-</svg>
