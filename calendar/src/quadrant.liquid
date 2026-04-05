@@ -1,93 +1,135 @@
 <style>
+  .cal-q,
   .cal-q * {
     font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
     letter-spacing: normal !important;
   }
-  .cal-q .section-title {
-    font-size: 13px;
+
+  .cal-q {
+    min-width: 0;
+  }
+
+  .cal-q .cal-day-title {
+    font-size: 21px;
     font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .cal-q .cal-section + .cal-section {
+    margin-top: 2px;
+    padding-top: 2px;
+    border-top: 2px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .cal-q .cal-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  .cal-q .cal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: stretch;
+  }
+
+  .cal-q .cal-section-title {
+    align-self: flex-start;
     text-transform: uppercase;
     letter-spacing: 1px !important;
-    margin-bottom: 1px;
-    opacity: 0.5;
   }
-  .cal-q .event-row {
+
+  .cal-q .cal-row {
     display: grid;
     grid-template-columns: 100px minmax(0, 1fr);
     column-gap: 8px;
     align-items: flex-start;
-    line-height: 1.3;
+    min-width: 0;
   }
-  .cal-q .secondary.event-row {
+
+  .cal-q .cal-row--secondary {
     grid-template-columns: 96px minmax(0, 1fr);
   }
-  .cal-q .col-date {
-    white-space: nowrap;
+
+  .cal-q .cal-row__meta {
     min-width: 0;
+  }
+
+  .cal-q .cal-row__content {
+    min-width: 0;
+  }
+
+  .cal-q .cal-time {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .cal-q .cal-time--secondary {
+    font-size: 18px;
+  }
+
+  .cal-q .cal-date-muted {
+    display: block;
+    font-size: 17px;
+    line-height: 1.1;
+    opacity: 0.55;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .cal-q .col-date--muted {
-    font-weight: 400;
-    opacity: 0.5;
-  }
-  .cal-q .col-date--bold {
-    font-weight: 700;
-  }
-  .cal-q .col-info {
+
+  .cal-q .cal-title {
     display: block;
-    flex: 1;
     min-width: 0;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    -webkit-box-pack: start;
-    display: -webkit-box;
-    overflow: hidden;
+    font-size: 20px;
+    line-height: 1.15;
   }
-  .cal-q .event-location {
+
+  .cal-q .cal-title--secondary {
+    font-size: 18px;
+  }
+
+  .cal-q .cal-location {
     display: block;
     font-size: 13px;
-    opacity: 0.5;
+    line-height: 1.2;
+    opacity: 0.55;
   }
-  .cal-q .col-info--oneline {
+
+  .cal-q .cal-badge {
     display: block;
-    -webkit-line-clamp: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .cal-q .all-day-bar {
+    border-radius: 0 !important;
     font-weight: 600;
-    background: black;
-    color: white;
-    padding: 1px 6px;
     margin-bottom: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .cal-q .section + .section {
-    margin-top: 2px;
-    padding-top: 2px;
-    border-top: 2px solid rgba(0,0,0,0.15);
-  }
-  .cal-q .primary { font-size: 20px; }
-  .cal-q .secondary { font-size: 18px; }
 </style>
-<div class="layout layout--col layout--left cal-q" style="height: 100%; padding: 6px 8px; box-sizing: border-box; overflow: hidden;">
-  <!-- Header -->
-  <div style="font-size: 21px; font-weight: 800; margin-bottom: 2px;">{{ today_label }}</div>
+<div class="layout layout--col layout--left gap--xsmall cal-q" style="height: 100%; padding: 6px 8px; box-sizing: border-box; overflow: hidden;">
+  <span class="title title--large cal-day-title">{{ today_label }}</span>
 
-  <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+  <div class="cal-body">
     {% if has_today %}
-    <div class="section">
-      <div class="section-title">Today</div>
+    <div class="cal-section">
+      <span class="label label--small label--gray cal-section-title">Today</span>
       {% for event in today_events %}
         {% if event.all_day %}
-        <div class="all-day-bar primary">{{ event.title }}</div>
+        <span class="label label--filled cal-badge" data-clamp="1">{{ event.title }}</span>
         {% else %}
-        <div class="event-row primary">
-          <div class="col-date col-date--bold">{{ event.time }}</div>
-          <div class="col-info">{{ event.title }}{% if event.location %}<span class="event-location">{{ event.location }}</span>{% endif %}</div>
+        <div class="cal-row">
+          <div class="cal-row__meta">
+            <span class="value value--base cal-time">{{ event.time }}</span>
+          </div>
+          <div class="cal-row__content">
+            <span class="description description--xlarge cal-title" data-clamp="2">{{ event.title }}</span>
+            {% if event.location %}<span class="label label--small label--gray cal-location" data-clamp="1">{{ event.location }}</span>{% endif %}
+          </div>
         </div>
         {% endif %}
       {% endfor %}
@@ -95,15 +137,19 @@
     {% endif %}
 
     {% if has_tomorrow %}
-    <div class="section">
-      <div class="section-title">Tomorrow</div>
+    <div class="cal-section">
+      <span class="label label--small label--gray cal-section-title">Tomorrow</span>
       {% for event in tomorrow_events %}
         {% if event.all_day %}
-        <div class="all-day-bar primary">{{ event.title }}</div>
+        <span class="label label--filled cal-badge" data-clamp="1">{{ event.title }}</span>
         {% else %}
-        <div class="event-row primary">
-          <div class="col-date col-date--bold">{{ event.time }}</div>
-          <div class="col-info">{{ event.title }}</div>
+        <div class="cal-row">
+          <div class="cal-row__meta">
+            <span class="value value--base cal-time">{{ event.time }}</span>
+          </div>
+          <div class="cal-row__content">
+            <span class="description description--xlarge cal-title" data-clamp="2">{{ event.title }}</span>
+          </div>
         </div>
         {% endif %}
       {% endfor %}
@@ -111,15 +157,19 @@
     {% endif %}
 
     {% if has_weekend %}
-    <div class="section">
-      <div class="section-title">This Weekend</div>
+    <div class="cal-section">
+      <span class="label label--small label--gray cal-section-title">This Weekend</span>
       {% for event in weekend_events %}
         {% if event.all_day %}
-        <div class="all-day-bar secondary">{{ event.title }}</div>
+        <span class="label label--filled cal-badge" data-clamp="1">{{ event.title }}</span>
         {% else %}
-        <div class="event-row secondary">
-          <div class="col-date col-date--bold">{{ event.time }}</div>
-          <div class="col-info">{{ event.title }}</div>
+        <div class="cal-row cal-row--secondary">
+          <div class="cal-row__meta">
+            <span class="value value--small cal-time cal-time--secondary">{{ event.time }}</span>
+          </div>
+          <div class="cal-row__content">
+            <span class="description description--large cal-title cal-title--secondary" data-clamp="1">{{ event.title }}</span>
+          </div>
         </div>
         {% endif %}
       {% endfor %}
@@ -127,24 +177,32 @@
     {% endif %}
 
     {% if has_later %}
-    <div class="section">
-      <div class="section-title">Later</div>
+    <div class="cal-section">
+      <span class="label label--small label--gray cal-section-title">Later</span>
       {% for event in later_events %}
-      <div class="event-row secondary">
-        <div class="col-date col-date--muted">{{ event.date_label }}</div>
-        <div class="col-info col-info--oneline">{{ event.title }}</div>
+      <div class="cal-row cal-row--secondary">
+        <div class="cal-row__meta">
+          <span class="cal-date-muted">{{ event.date_label }}</span>
+        </div>
+        <div class="cal-row__content">
+          <span class="description description--large cal-title cal-title--secondary" data-clamp="1">{{ event.title }}</span>
+        </div>
       </div>
       {% endfor %}
     </div>
     {% endif %}
 
     {% if has_upcoming %}
-    <div class="section">
-      <div class="section-title">Upcoming</div>
+    <div class="cal-section">
+      <span class="label label--small label--gray cal-section-title">Upcoming</span>
       {% for trip in upcoming %}
-      <div class="event-row secondary">
-        <div class="col-date col-date--muted">{{ trip.dates }}</div>
-        <div class="col-info col-info--oneline">{{ trip.title }}</div>
+      <div class="cal-row cal-row--secondary">
+        <div class="cal-row__meta">
+          <span class="cal-date-muted">{{ trip.dates }}</span>
+        </div>
+        <div class="cal-row__content">
+          <span class="description description--large cal-title cal-title--secondary" data-clamp="1">{{ trip.title }}</span>
+        </div>
       </div>
       {% endfor %}
     </div>

@@ -1,6 +1,8 @@
-<div class="layout layout--col gap--md">
-  <div class="title">{{ station }}</div>
-  <div class="label">{{ direction }}</div>
+<div class="layout layout--col layout--left gap--small mbta">
+  <div class="flex flex--col gap--xsmall">
+    <span class="title">{{ station }}</span>
+    <span class="label label--small label--gray">{{ direction }}</span>
+  </div>
 
   {% if trains.size > 0 %}
   {% for train in trains limit:3 %}
@@ -13,8 +15,14 @@
   <div class="description">No trains</div>
   {% endif %}
 
-  {% if alerts.size > 0 %}
   <div class="divider"></div>
-  <div class="description">{{ alerts[0].header | truncate: 80 }}</div>
+  <div class="row row--center-y gap--small">
+    <span class="label label--small label--filled mbta-pill">RL</span>
+    <span class="description" data-clamp="1">{{ subway_status }}</span>
+  </div>
+
+  {% if live_alerts.size > 0 %}
+  <div class="divider"></div>
+  <div class="description" data-clamp="2">{{ live_alerts[0].header | truncate: 80 }}</div>
   {% endif %}
 </div>

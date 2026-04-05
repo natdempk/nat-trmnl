@@ -1,5 +1,11 @@
-<div class="layout layout--col gap--md">
-  <div class="title">{{ station }} {{ direction }}</div>
+<div class="layout layout--col layout--left gap--small mbta">
+  <div class="row row--center-y gap--space-between">
+    <div class="flex flex--col gap--xsmall">
+      <span class="title">{{ station }}</span>
+      <span class="label label--small label--gray">{{ direction }}</span>
+    </div>
+    <span class="label label--small label--filled mbta-pill">RL</span>
+  </div>
 
   {% if trains.size > 0 %}
   {% for train in trains limit:2 %}
@@ -12,7 +18,13 @@
   <div class="description">No trains</div>
   {% endif %}
 
-  {% if alerts.size > 0 %}
-  <div class="description">⚠ {{ alerts[0].header | truncate: 60 }}</div>
+  <div class="divider"></div>
+  <div class="row row--center-y gap--small">
+    {% if status_ok %}<span class="mbta-alert__icon">&#9679;</span>{% else %}<span class="mbta-alert__icon">&#9888;</span>{% endif %}
+    <span class="description mbta-status-copy--small" data-clamp="1">{{ subway_status }}</span>
+  </div>
+
+  {% if live_alerts.size > 0 %}
+  <div class="description mbta-status-copy--small" data-clamp="1">&#9888; {{ live_alerts[0].header }}</div>
   {% endif %}
 </div>

@@ -6,6 +6,7 @@ Custom TRMNL e-ink display plugins, hosted on Cloudflare Workers.
 - Always use pnpm + pnpx, never npm + npx. Use `pnpm exec` for running local binaries.
 - Always write TypeScript, never plain JavaScript.
 - Worker code lives in `worker/`, templates in per-plugin dirs (e.g. `mbta/`).
+- Read `trmnl-framework.md` before doing substantial TRMNL template or design-system work. It is our repo-specific high-level guide to the official framework docs, TRMNL X considerations, runtime helpers, and plugin packaging conventions.
 
 ## Architecture
 
@@ -64,6 +65,7 @@ These are e-ink dashboard widgets viewed at a glance from 3–5 inches away. Des
 - In practice, the raw `render/quadrant.html?...` view and the `/quadrant` preview shell can feel different enough to mislead layout work. Use `/quadrant` as the canonical validation view and only use the direct render URL as a debugging aid.
 - When viewing the quadrant previews, you must select TRMNL X to ensure we are previewing for the right platform. If you see "TRMNL OG" we are on the wrong preview and our results will be incorrect. We only care about supporting TRMNL X.
 - Before writing custom layout CSS for TRMNL X plugins, read the official v3 framework docs starting with the TRMNL X guide: `https://trmnl.com/framework/docs/v3/trmnl_x_guide.md`. Prefer the built-in framework primitives (`layout`, `flex`, `grid`, `title_bar`, `image image--cover`, typography classes like `title` / `value` / `label` / `description`, and runtime helpers like `data-clamp`) over absolute positioning or bespoke sizing when the framework can already solve the problem.
+- Use `trmnl-framework.md` as the first-pass local reference for those framework decisions, then follow its links back to the official docs when you need exact API details or fuller examples.
 - If you do need custom layout CSS, avoid mixing framework layout utilities (`flex--row`, `grow`, `stretch-y`, etc.) with custom `display/grid/flex` rules on the same element unless you're certain they agree. When layout starts behaving unpredictably, simplify to one layout system per container.
 
 ## Handoff Notes

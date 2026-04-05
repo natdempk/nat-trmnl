@@ -1,1 +1,117 @@
+<style>
+  .mbta,
+  .mbta * {
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    letter-spacing: normal !important;
+  }
 
+  .mbta {
+    min-width: 0;
+  }
+
+  .mbta-board {
+    width: 100%;
+    border: 3px solid black;
+    box-sizing: border-box;
+  }
+
+  .mbta-board__header {
+    background: black;
+    color: white;
+    padding: 5px 12px;
+    text-align: center;
+  }
+
+  .mbta-board__title {
+    display: block;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 3px !important;
+  }
+
+  .mbta-board__subtitle {
+    padding: 2px 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mbta-trains {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mbta-trains--center {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .mbta-train-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mbta-train-display,
+  .mbta-train-time {
+    font-size: 22px;
+    line-height: 1.05;
+  }
+
+  .mbta-train-row--compact .mbta-train-display,
+  .mbta-train-row--compact .mbta-train-time {
+    font-size: 18px;
+  }
+
+  .mbta-train-row--primary .mbta-train-display,
+  .mbta-train-row--primary .mbta-train-time {
+    font-weight: 700;
+  }
+
+  .mbta-status-copy {
+    font-size: 16px;
+    line-height: 1.1;
+  }
+
+  .mbta-status-copy--small {
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .mbta-kicker {
+    text-transform: uppercase;
+    letter-spacing: 1px !important;
+  }
+
+  .mbta-pill {
+    border-radius: 9999px !important;
+    padding: 3px 10px !important;
+    line-height: 1 !important;
+  }
+
+  .mbta-alert-box {
+    width: 100%;
+    border: 2px solid black;
+    padding: 8px 10px;
+    box-sizing: border-box;
+  }
+
+  .mbta-alert__icon {
+    font-size: 16px;
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+
+  .mbta-planned-copy {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .mbta-note {
+    opacity: 0.65;
+  }
+</style>

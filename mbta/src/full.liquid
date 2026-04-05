@@ -1,64 +1,51 @@
-<style>
-  .mbta * {
-    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-    letter-spacing: normal !important;
-  }
-</style>
-<div class="layout layout--col layout--left gap--sm mbta">
-  <!-- Station sign header -->
-  <div style="border: 3px solid black; width: 100%; max-width: 320px;">
-    <div style="background: black; color: white; padding: 6px 16px; text-align: center;">
-      <span style="font-size: 24px; font-weight: 900; letter-spacing: 3px !important;">DAVIS</span>
+<div class="layout layout--col layout--left gap--small mbta">
+  <div class="mbta-board">
+    <div class="mbta-board__header">
+      <span class="mbta-board__title">{{ station | upcase }}</span>
     </div>
-    <div style="padding: 3px 16px; text-align: center;">
-      <span style="font-size: 13px; font-weight: 700;">INBOUND</span>
-    </div>
+    <div class="mbta-board__subtitle">{{ direction | upcase }}</div>
   </div>
 
-  <!-- Train times -->
   {% if trains.size > 0 %}
-  <div style="display: flex; flex-direction: column; gap: 2px; width: 100%; max-width: 320px;">
+  <div class="flex flex--col gap--xsmall mbta-trains">
     {% for train in trains %}
-    <div style="display: flex; justify-content: space-between; align-items: baseline;{% if forloop.first %} font-weight: 700;{% endif %}">
-      <span style="font-size: 18px;">{{ train.display }}</span>
-      <span style="font-size: 18px;">{{ train.time }}</span>
+    <div class="row row--center-y gap--space-between mbta-train-row mbta-train-row--compact{% if forloop.first %} mbta-train-row--primary{% endif %}">
+      <span class="value value--small mbta-train-display">{{ train.display }}</span>
+      <span class="value value--small mbta-train-time">{{ train.time }}</span>
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <div style="font-size: 16px;">No upcoming trains</div>
+  <div class="description description--large mbta-note">No upcoming trains</div>
   {% endif %}
 
-  <!-- Subway status -->
-  <div style="width: 100%; max-width: 320px; border-top: 2px solid black; border-bottom: 2px solid black; padding: 8px 0;">
-    <div style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Subway Status</div>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span style="background: black; color: white; font-size: 13px; font-weight: 800; padding: 4px 14px; border-radius: 20px;">RL</span>
-      {% if status_ok %}<span style="font-size: 14px;">&#9679;</span>{% else %}<span style="font-size: 14px;">&#9888;</span>{% endif %}
-      <span style="font-size: 16px;">{{ subway_status }}</span>
+  <div class="divider"></div>
+
+  <div class="flex flex--col gap--xsmall">
+    <span class="label label--small label--gray mbta-kicker">Subway Status</span>
+    <div class="row row--center-y gap--small">
+      <span class="label label--small label--filled mbta-pill">RL</span>
+      {% if status_ok %}<span class="mbta-alert__icon">&#9679;</span>{% else %}<span class="mbta-alert__icon">&#9888;</span>{% endif %}
+      <span class="description description--large mbta-status-copy" data-clamp="1">{{ subway_status }}</span>
     </div>
   </div>
 
-  <!-- Live service alerts -->
   {% if live_alerts.size > 0 %}
-  <div style="border: 2px solid black; padding: 8px 10px; width: 100%; max-width: 320px;">
+  <div class="mbta-alert-box">
     {% for alert in live_alerts %}
-    <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 14px;{% unless forloop.first %} margin-top: 6px;{% endunless %}">
-      <span style="font-size: 16px; line-height: 1; flex-shrink: 0;">&#9888;</span>
-      <div>{{ alert.header }}</div>
+    <div class="row gap--small"{% unless forloop.first %} style="margin-top: 6px;"{% endunless %}>
+      <span class="mbta-alert__icon">&#9888;</span>
+      <span class="description mbta-status-copy--small" data-clamp="2">{{ alert.header }}</span>
     </div>
     {% endfor %}
   </div>
   {% endif %}
 
-  <!-- Planned work -->
   {% if planned_work.size > 0 %}
-  <div style="width: 100%; max-width: 320px;">
-    <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Planned Work</div>
+  <div class="flex flex--col gap--xsmall">
+    <span class="label label--small label--gray mbta-kicker">Planned Work</span>
     {% for pw in planned_work %}
-    <div style="font-size: 13px;{% unless forloop.first %} margin-top: 4px;{% endunless %}">
-      {{ pw.header | truncate: 120 }}
-    </div>
+    <span class="description mbta-planned-copy" data-clamp="2">{{ pw.header | truncate: 120 }}</span>
     {% endfor %}
   </div>
   {% endif %}
