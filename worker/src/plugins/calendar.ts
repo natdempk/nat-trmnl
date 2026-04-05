@@ -98,6 +98,25 @@ function formatDateShort(d: Date): string {
   }).format(d);
 }
 
+function formatMonthShort(d: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: TZ,
+    month: "short",
+  }).format(d);
+}
+
+function formatDateRangeCompact(start: Date, endExclusive: Date): string {
+  const endInclusive = addDays(endExclusive, -1);
+  const startParts = toLocalDateParts(start);
+  const endParts = toLocalDateParts(endInclusive);
+
+  if (startParts.year === endParts.year && startParts.month === endParts.month) {
+    return `${formatMonthShort(start)} ${startParts.day}-${endParts.day}`;
+  }
+
+  return `${formatDateShort(start)}-${formatDateShort(endInclusive)}`;
+}
+
 function parseICS(icsText: string): CalendarEvent[] {
   const jcal = ICAL.parse(icsText);
   const comp = new ICAL.Component(jcal);
@@ -238,10 +257,7 @@ export async function getCalendarData(env: Env) {
 
   // Upcoming multi-day events
   const upcoming: UpcomingTrip[] = multiDayEvents.map((e) => {
-    const startStr = formatDateShort(e.start);
-    const endDate = addDays(e.end, -1); // end is exclusive for all-day events
-    const endStr = formatDateShort(endDate);
-    return { title: e.title, dates: `${startStr}–${endStr}` };
+    return { title: e.title, dates: formatDateRangeCompact(e.start, e.end) };
   });
 
   // "Later" — events beyond today/tomorrow/weekend, to fill space

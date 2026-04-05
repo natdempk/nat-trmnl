@@ -40,10 +40,11 @@ These are e-ink dashboard widgets viewed at a glance from 3–5 inches away. Des
 
 - **Glanceability over completeness** — show the most important info large and bold. Don't try to fit everything; prioritize ruthlessly. Primary info (today's events, next train) should be readable from across a room.
 - **Font sizes matter** — quadrant is ~400x300px. Primary content 19px+, secondary 16px+, labels/headers 13-16px. Never go below 13px. Use font weight (700 vs 400) and opacity (0.5) for hierarchy instead of many size tiers.
-- **Two-column layout for lists** — fixed-width date/time column + flexible title column. Titles truncate with ellipsis. Consistent column alignment across sections.
+- **Two-column layout for lists** — fixed-width date/time column + flexible title column. Prefer CSS grid over inline/flex text runs for these rows. Titles truncate with ellipsis, and the date/time column itself must also clip/ellipsis so long date labels can't paint into the title column.
 - **Sections hide when empty** — don't show "Nothing planned" placeholders. Use the space for lower-priority content instead.
 - **Fill the space intelligently** — if primary sections are sparse, backfill with lower-priority content (e.g. "Later" events). Cap item counts dynamically based on what else is showing.
 - **Time-aware filtering** — hide past events, show only what's actionable. The display should always feel current.
+- **Compact date ranges** — for multi-day calendar items, use `May 1-3` when start/end are in the same month; include both months only when they differ.
 - **Sans-serif fonts** — override TRMNL framework fonts with system sans-serif via inline `<style>` blocks with `!important`.
 - **E-ink constraints** — no color, no gradients. Use solid black/white fills (e.g. inverted bars for all-day events), borders, and opacity for visual differentiation. Keep line weights at 2px+ for visibility.
 - **Use `agent-browser` to visually verify** — always screenshot the quadrant preview to check that content fits, columns align, and text is readable at the target size.
@@ -56,6 +57,7 @@ These are e-ink dashboard widgets viewed at a glance from 3–5 inches away. Des
 - `mbta/src/settings.yml` and `calendar/src/settings.yml` have `polling_url` pointed at localhost for dev; update before pushing to trmnl.com
 - Templates use inline `<style>` blocks with `!important` to override TRMNL framework fonts (sans-serif)
 - `agent-browser open http://127.0.0.1:4567/quadrant && agent-browser screenshot /tmp/screenshot.png` — screenshot template previews for visual verification (use `agent-browser click @ref` with refs from `agent-browser snapshot -i` to interact, e.g. click Poll to refresh data)
+- For layout debugging, inspect `http://127.0.0.1:4567/render/quadrant.html?...` directly as well as `/quadrant`; the rendered iframe is the source of truth for clipping, overflow, and actual device-width layout.
 
 ## Deployment
 
