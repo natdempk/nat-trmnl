@@ -1,0 +1,37 @@
+# TRMNLP configuration
+---
+watch:
+  - .trmnlp.yml
+  - src
+
+# Mock data for preview — used when no polling_url is set
+custom_fields:
+  title: "Baby Tracker"
+  top_meta: "Due Sep 30"
+  due_date_label: "Wed, Sep 30, 2026"
+  due_date_short: "Sep 30"
+  due_date_meta: "Wed • 2026"
+  days_until_due: 178
+  countdown_label: "days to go"
+  gestation_label: "14w 4d"
+  gestation_long: "14 weeks 4 days"
+  progress_grid_row_1: "■■■■■■■■"
+  progress_grid_row_2: "■■■■■■□□"
+  progress_grid_row_3: "□□□□□□□□"
+  progress_grid_row_4: "□□□□□□□□"
+  progress_grid_row_5: "□□□□□□□□"
+  trimester_label: "Second Trimester"
+  progress_percent: 36
+  progress_label: "102 / 280 days"
+  fruit_name: "Lemon"
+  fruit_badge: "LE"
+  fruit_shape: "round"
+  fruit_image_key: "week-14-lemon"
+  fruit_image_filename: "week-14-lemon.png"
+  fruit_image_url: "http://localhost:8787/prenatal-images/week-14-lemon"
+  fruit_images_url: "http://localhost:8787/prenatal/images"
+  fruit_label: "14 weeks along"
+  footer_label: "178 days until Sep 30"
+
+variables:
+  trmnl: {}

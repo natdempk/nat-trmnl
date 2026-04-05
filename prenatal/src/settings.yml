@@ -1,0 +1,10 @@
+---
+strategy: polling
+polling_verb: get
+polling_url: 'http://localhost:8787/prenatal'
+polling_headers: ''
+name: Baby Tracker
+refresh_interval: 60
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
