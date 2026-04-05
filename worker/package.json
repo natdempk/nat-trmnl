@@ -11,5 +11,8 @@
     "@cloudflare/workers-types": "^4.20250404.0",
     "typescript": "^5.8.0",
     "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "ical.js": "^2.2.1"
   }
 }

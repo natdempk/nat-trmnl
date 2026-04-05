@@ -1,0 +1,56 @@
+# TRMNLP configuration
+---
+watch:
+  - .trmnlp.yml
+  - src
+
+# Mock data for preview — used when no polling_url is set
+custom_fields:
+  today_label: "Sunday, Apr 5"
+  today_events:
+    - title: "Brunch with Johnsons"
+      time: "10:30"
+      location: "Tatte Bakery"
+      all_day: false
+    - title: "Grocery run"
+      time: "14:00"
+      all_day: false
+    - title: "Movie night"
+      time: "19:00"
+      all_day: false
+  has_today: true
+  tomorrow_events:
+    - title: "Team standup"
+      time: "09:00"
+      all_day: false
+    - title: "Dentist"
+      time: "15:30"
+      location: "Davis Sq Dental"
+      all_day: false
+  has_tomorrow: true
+  weekend_events: []
+  has_weekend: false
+  later_events:
+    - title: "Dinner with Emily"
+      time: "18:30"
+      date_label: "Fri Apr 10"
+      all_day: false
+    - title: "Diplomacy day"
+      time: "08:45"
+      date_label: "Sat Apr 11"
+      all_day: false
+    - title: "Yoga @ 9AM"
+      time: "09:00"
+      date_label: "Sun Apr 12"
+      all_day: false
+  has_later: true
+  upcoming:
+    - title: "Beach trip"
+      dates: "Apr 18–Apr 21"
+    - title: "Mom visiting"
+      dates: "Apr 25–Apr 27"
+  has_upcoming: true
+  updated_at: "08:30"
+
+variables:
+  trmnl: {}

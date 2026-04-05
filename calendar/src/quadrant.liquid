@@ -1,0 +1,145 @@
+<style>
+  .cal-q * {
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    letter-spacing: normal !important;
+  }
+  .cal-q .section-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px !important;
+    margin-bottom: 1px;
+    opacity: 0.5;
+  }
+  .cal-q .event-row {
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.3;
+  }
+  .cal-q .col-date {
+    white-space: nowrap;
+    width: 105px;
+    min-width: 105px;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+  .cal-q .col-date--muted {
+    font-weight: 400;
+    opacity: 0.5;
+  }
+  .cal-q .col-date--bold {
+    font-weight: 700;
+  }
+  .cal-q .col-info {
+    flex: 1;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cal-q .event-location {
+    font-size: 13px;
+    opacity: 0.5;
+  }
+  .cal-q .col-info--oneline {
+    -webkit-line-clamp: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .cal-q .all-day-bar {
+    font-weight: 600;
+    background: black;
+    color: white;
+    padding: 1px 6px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cal-q .section + .section {
+    margin-top: 2px;
+    padding-top: 2px;
+    border-top: 2px solid rgba(0,0,0,0.15);
+  }
+  .cal-q .primary { font-size: 20px; }
+  .cal-q .secondary { font-size: 20px; }
+</style>
+<div class="layout layout--col layout--left cal-q" style="height: 100%; padding: 6px 8px; box-sizing: border-box; overflow: hidden;">
+  <!-- Header -->
+  <div style="font-size: 21px; font-weight: 800; margin-bottom: 2px;">{{ today_label }}</div>
+
+  <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+    {% if has_today %}
+    <div class="section">
+      <div class="section-title">Today</div>
+      {% for event in today_events %}
+        {% if event.all_day %}
+        <div class="all-day-bar primary">{{ event.title }}</div>
+        {% else %}
+        <div class="event-row primary">
+          <span class="col-date col-date--bold">{{ event.time }}</span>
+          <span class="col-info">{{ event.title }}{% if event.location %}<br><span class="event-location">{{ event.location }}</span>{% endif %}</span>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if has_tomorrow %}
+    <div class="section">
+      <div class="section-title">Tomorrow</div>
+      {% for event in tomorrow_events %}
+        {% if event.all_day %}
+        <div class="all-day-bar primary">{{ event.title }}</div>
+        {% else %}
+        <div class="event-row primary">
+          <span class="col-date col-date--bold">{{ event.time }}</span>
+          <span class="col-info">{{ event.title }}</span>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if has_weekend %}
+    <div class="section">
+      <div class="section-title">This Weekend</div>
+      {% for event in weekend_events %}
+        {% if event.all_day %}
+        <div class="all-day-bar secondary">{{ event.title }}</div>
+        {% else %}
+        <div class="event-row secondary">
+          <span class="col-date col-date--bold">{{ event.time }}</span>
+          <span class="col-info">{{ event.title }}</span>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if has_later %}
+    <div class="section">
+      <div class="section-title">Later</div>
+      {% for event in later_events %}
+      <div class="event-row secondary">
+        <span class="col-date col-date--muted">{{ event.date_label }}</span>
+        <span class="col-info col-info--oneline">{{ event.title }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if has_upcoming %}
+    <div class="section">
+      <div class="section-title">Upcoming</div>
+      {% for trip in upcoming %}
+      <div class="event-row secondary">
+        <span class="col-date col-date--muted">{{ trip.dates }}</span>
+        <span class="col-info col-info--oneline">{{ trip.title }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
